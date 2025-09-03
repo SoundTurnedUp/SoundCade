@@ -1,0 +1,14 @@
+C:\Users\manny\source\repos\C#\Big Projects\SoundCade\SoundCade\bin\Debug\net8.0\SoundCade.exe
+C:\Users\manny\source\repos\C#\Big Projects\SoundCade\SoundCade\bin\Debug\net8.0\SoundCade.deps.json
+C:\Users\manny\source\repos\C#\Big Projects\SoundCade\SoundCade\bin\Debug\net8.0\SoundCade.runtimeconfig.json
+C:\Users\manny\source\repos\C#\Big Projects\SoundCade\SoundCade\bin\Debug\net8.0\SoundCade.dll
+C:\Users\manny\source\repos\C#\Big Projects\SoundCade\SoundCade\bin\Debug\net8.0\SoundCade.pdb
+C:\Users\manny\source\repos\C#\Big Projects\SoundCade\SoundCade\obj\Debug\net8.0\SoundCade.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\manny\source\repos\C#\Big Projects\SoundCade\SoundCade\obj\Debug\net8.0\SoundCade.AssemblyInfoInputs.cache
+C:\Users\manny\source\repos\C#\Big Projects\SoundCade\SoundCade\obj\Debug\net8.0\SoundCade.AssemblyInfo.cs
+C:\Users\manny\source\repos\C#\Big Projects\SoundCade\SoundCade\obj\Debug\net8.0\SoundCade.csproj.CoreCompileInputs.cache
+C:\Users\manny\source\repos\C#\Big Projects\SoundCade\SoundCade\obj\Debug\net8.0\SoundCade.dll
+C:\Users\manny\source\repos\C#\Big Projects\SoundCade\SoundCade\obj\Debug\net8.0\refint\SoundCade.dll
+C:\Users\manny\source\repos\C#\Big Projects\SoundCade\SoundCade\obj\Debug\net8.0\SoundCade.pdb
+C:\Users\manny\source\repos\C#\Big Projects\SoundCade\SoundCade\obj\Debug\net8.0\SoundCade.genruntimeconfig.cache
+C:\Users\manny\source\repos\C#\Big Projects\SoundCade\SoundCade\obj\Debug\net8.0\ref\SoundCade.dll
