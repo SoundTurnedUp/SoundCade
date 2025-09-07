@@ -23,7 +23,7 @@ namespace SoundCade
 
     public class Snake
     {
-        public static void SnakeGame()
+        public static void PlayGame()
         {
             const int defaultWidth = 40;
             const int defaultHeight = 20;
@@ -38,8 +38,8 @@ namespace SoundCade
                 Console.BackgroundColor = ConsoleColor.Black;
                 Console.ForegroundColor = ConsoleColor.DarkCyan;
 
-                string[] lines = new string[]
-                {
+                string[] lines =
+                [
                     "█████ █   █  ███  █  █  █████",
                     "█     ██  █ █   █ █ █   █    ",
                     "█████ █ █ █ █████ ██ █  ████ ",
@@ -49,7 +49,7 @@ namespace SoundCade
                     "Esc to quit while playing",
                     "",
                     "Press any key to start..."
-                };
+                ];
 
                 int windowWidth = Console.WindowWidth;
                 int windowHeight = Console.WindowHeight;
@@ -89,6 +89,7 @@ namespace SoundCade
                 do { food = new Point(rand.Next(width), rand.Next(height)); } while (snake.Contains(food));
 
                 Console.Clear();
+                Console.Beep(6000, 400);
                 DrawBorder(width, height, offsetX, offsetY);
                 DrawCell(food.X, food.Y, '*', offsetX, offsetY);
                 foreach (var p in snake) DrawCell(p.X, p.Y, '█', offsetX, offsetY);
