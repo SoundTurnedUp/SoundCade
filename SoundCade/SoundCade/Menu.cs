@@ -2,7 +2,7 @@
 {
     using System;
 
-    class Program
+    class Menu
     {
         public static void Main(string[] args)
         {
@@ -17,7 +17,8 @@
             "█     █   █ █   █ ██  █ █   █ █     █   █ █   █ █    ",
             "█████ █   █ █   █ █ █ █ █   █ █     █████ █   █ ████ ",
             "    █ █   █ █   █ █  ██ █   █ █     █   █ █   █ █    ",
-            "█████  ███  █████ █   █ ████   ████ █   █ ████  █████"
+            "█████  ███  █████ █   █ ████   ████ █   █ ████  █████",
+            ""
             };
 
             string[] menuItems = { "SNAKE", "PONG" };
@@ -78,6 +79,8 @@
                     Console.WriteLine(text);
                 }
 
+                Console.CursorVisible = false;
+
                 Console.ResetColor();
 
                 var key = Console.ReadKey(true).Key;
@@ -92,18 +95,24 @@
                     case ConsoleKey.Enter:
                         if (menuItems[selectedIndex] == "SNAKE")
                         {
-                            Console.Beep(6000, 400);
+                            Beep(6000, 400);
                             Snake.PlayGame();
                         }
                         else if (menuItems[selectedIndex] == "PONG")
                         {
-                            Console.Beep(6000, 400);
+                            Beep(6000, 400);
                             Pong.PlayGame();
                         }
                         running = false;
                         break;
                 }
             }
+        }
+
+        public static void Beep(int frequency, int duration)
+        {
+            if (OperatingSystem.IsWindows())
+                Console.Beep(frequency, duration);
         }
     }
 }
