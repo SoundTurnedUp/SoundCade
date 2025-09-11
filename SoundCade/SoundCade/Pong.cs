@@ -2,6 +2,9 @@
 {
     public class Pong
     {
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern short GetAsyncKeyState(int vKey);
+
         const int defaultWidth = 50;
         const int defaultHeight = 20;
 
@@ -84,32 +87,34 @@
 
             DrawBorder(width, height, offsetX, offsetY);
 
+            for (int y = 0; y < height; y++)
+            {
+                DrawCell(leftX, y, (y >= leftPaddleY && y < leftPaddleY + paddleSize) ? '█' : ' ', offsetX, offsetY);
+                DrawCell(rightX, y, (y >= rightPaddleY && y < rightPaddleY + paddleSize) ? '█' : ' ', offsetX, offsetY);
+            }
+
+            DrawCell(ballX, ballY, 'O', offsetX, offsetY);
+
             bool running = true;
+            HashSet<ConsoleKey> heldKeys = new();
+            int delay = 50;
+
             while (running)
             {
-                if (Console.KeyAvailable)
+                while (Console.KeyAvailable)
                 {
-                    ConsoleKey key;
-                    do { key = Console.ReadKey(true).Key; } while (Console.KeyAvailable);
-
-                    switch (key)
-                    {
-                        case ConsoleKey.W:
-                            if (leftPaddleY > 0) leftPaddleY--;
-                            break;
-                        case ConsoleKey.S:
-                            if (leftPaddleY + paddleSize < height) leftPaddleY++;
-                            break;
-                        case ConsoleKey.UpArrow:
-                            if (rightPaddleY > 0) rightPaddleY--;
-                            break;
-                        case ConsoleKey.DownArrow:
-                            if (rightPaddleY + paddleSize < height) rightPaddleY++;
-                            break;
-                        case ConsoleKey.Escape:
-                            return 0; 
-                    }
+                    var key = Console.ReadKey(true).Key;
+                    heldKeys.Add(key);
                 }
+
+                if (heldKeys.Contains(ConsoleKey.W) && leftPaddleY > 0) leftPaddleY--;
+                if (heldKeys.Contains(ConsoleKey.S) && leftPaddleY + paddleSize < height) leftPaddleY++;
+                if (heldKeys.Contains(ConsoleKey.UpArrow) && rightPaddleY > 0) rightPaddleY--;
+                if (heldKeys.Contains(ConsoleKey.DownArrow) && rightPaddleY + paddleSize < height) rightPaddleY++;
+
+                if (heldKeys.Contains(ConsoleKey.Escape)) return 0;
+
+                heldKeys.RemoveWhere(k => (GetAsyncKeyState((int)k) & 0x8000) == 0);
 
                 DrawCell(ballX, ballY, ' ', offsetX, offsetY);
 
@@ -118,10 +123,8 @@
 
                 if (ballY <= 0 || ballY >= height - 1) ballDy *= -1;
 
-                if (ballX == leftX + 1 && ballY >= leftPaddleY && ballY < leftPaddleY + paddleSize)
-                    ballDx = 1;
-                if (ballX == rightX - 1 && ballY >= rightPaddleY && ballY < rightPaddleY + paddleSize)
-                    ballDx = -1;
+                if (ballX == leftX + 1 && ballY >= leftPaddleY && ballY < leftPaddleY + paddleSize) ballDx = 1;
+                if (ballX == rightX - 1 && ballY >= rightPaddleY && ballY < rightPaddleY + paddleSize) ballDx = -1;
 
                 if (ballX <= 0)
                 {
@@ -140,25 +143,24 @@
 
                 for (int y = 0; y < height; y++)
                 {
-                    char cLeft = (y >= leftPaddleY && y < leftPaddleY + paddleSize) ? '█' : ' ';
-                    char cRight = (y >= rightPaddleY && y < rightPaddleY + paddleSize) ? '█' : ' ';
-                    DrawCell(leftX, y, cLeft, offsetX, offsetY);
-                    DrawCell(rightX, y, cRight, offsetX, offsetY);
+                    DrawCell(leftX, y, (y >= leftPaddleY && y < leftPaddleY + paddleSize) ? '█' : ' ', offsetX, offsetY);
+                    DrawCell(rightX, y, (y >= rightPaddleY && y < rightPaddleY + paddleSize) ? '█' : ' ', offsetX, offsetY);
                 }
 
                 DrawCell(ballX, ballY, 'O', offsetX, offsetY);
 
                 Console.SetCursorPosition(offsetX, offsetY - 1);
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.Write($"Player 1: {scoreLeft}   Player 2: {scoreRight}");
+                Console.Write($"Player 1: {scoreLeft}   Player 2: {scoreRight}   ");
+                Console.ResetColor();
 
-                int winScore = 2;
+                int winScore = 5;
                 if (scoreLeft == winScore || scoreRight == winScore)
                 {
                     return scoreLeft == winScore ? 1 : 2;
                 }
 
-                Thread.Sleep(100);
+                Thread.Sleep(delay);
             }
 
             return 0;
