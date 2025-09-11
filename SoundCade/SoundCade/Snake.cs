@@ -171,7 +171,7 @@
 
                 Console.SetCursorPosition(offsetX, offsetY + height + 2);
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.Write($"Score: {score} Speed: {speed}ms (Esc to quit)   ");
+                Console.Write($"Score: {score} Speed: {speed}ms");
 
                 Thread.Sleep(speed);
             }
@@ -216,7 +216,7 @@
 
             return (k == ConsoleKey.Y);
         }
-        public static void DrawBorder(int width, int height, int offsetX, int offsetY)
+        private static void DrawBorder(int width, int height, int offsetX, int offsetY)
         {
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.SetCursorPosition(offsetX, offsetY);
@@ -231,7 +231,7 @@
             Console.ResetColor();
         }
 
-        public static void DrawCell(int x, int y, char c, int offsetX, int offsetY)
+        private static void DrawCell(int x, int y, char c, int offsetX, int offsetY)
         {
             Console.SetCursorPosition(x + 1 + offsetX, y + 1 + offsetY);
             if (c == '█') Console.ForegroundColor = ConsoleColor.DarkGreen; // Snake
