@@ -80,7 +80,7 @@
             int ballX = width / 2;
             int ballY = height / 2;
             int ballDx = rand.Next(0, 2) == 0 ? -1 : 1;
-            int ballDy = rand.Next(0, 2) == 0 ? -1 : 1;
+            int ballDy = rand.Next(-1, 2); 
 
             int scoreLeft = 0;
             int scoreRight = 0;
@@ -121,10 +121,30 @@
                 ballX += ballDx;
                 ballY += ballDy;
 
-                if (ballY <= 0 || ballY >= height - 1) ballDy *= -1;
+                if (ballY <= 0)
+                {
+                    ballY = 0;
+                    ballDy *= -1;
+                }
+                else if (ballY >= height - 1)
+                {
+                    ballY = height - 1;
+                    ballDy *= -1;
+                }
 
-                if (ballX == leftX + 1 && ballY >= leftPaddleY && ballY < leftPaddleY + paddleSize) ballDx = 1;
-                if (ballX == rightX - 1 && ballY >= rightPaddleY && ballY < rightPaddleY + paddleSize) ballDx = -1;
+                if (ballX == leftX + 1 && ballY >= leftPaddleY && ballY < leftPaddleY + paddleSize)
+                {
+                    ballDx = 1;
+                    int hitPos = ballY - leftPaddleY;
+                    ballDy = hitPos - paddleSize / 2; 
+                }
+
+                if (ballX == rightX - 1 && ballY >= rightPaddleY && ballY < rightPaddleY + paddleSize)
+                {
+                    ballDx = -1;
+                    int hitPos = ballY - rightPaddleY;
+                    ballDy = hitPos - paddleSize / 2;
+                }
 
                 if (ballX <= 0)
                 {
@@ -132,6 +152,7 @@
                     ballX = width / 2;
                     ballY = height / 2;
                     ballDx = 1;
+                    ballDy = rand.Next(-1, 2);
                 }
                 else if (ballX >= width - 1)
                 {
@@ -139,6 +160,7 @@
                     ballX = width / 2;
                     ballY = height / 2;
                     ballDx = -1;
+                    ballDy = rand.Next(-1, 2);
                 }
 
                 for (int y = 0; y < height; y++)
@@ -154,7 +176,7 @@
                 Console.Write($"Player 1: {scoreLeft}   Player 2: {scoreRight}   ");
                 Console.ResetColor();
 
-                int winScore = 5;
+                int winScore = 2;
                 if (scoreLeft == winScore || scoreRight == winScore)
                 {
                     return scoreLeft == winScore ? 1 : 2;
